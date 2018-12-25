@@ -2,7 +2,7 @@
 	"name": "reactorings",
 	"displayName": "Reactorings",
 	"description": "A bunch of useful refactorings and scaffoldings for VS Code",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"publisher": "atthealchemist",
 	"repository": {
 		"type": "github",
