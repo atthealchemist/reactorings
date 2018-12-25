@@ -2,7 +2,12 @@
 	"name": "reactorings",
 	"displayName": "Reactorings",
 	"description": "A bunch of useful refactorings and scaffoldings for VS Code",
-	"version": "1.4.0",
+	"version": "1.0.0",
+	"publisher": "atthealchemist",
+	"repository": {
+		"type": "github",
+		"url": "https://github.com/atthealchemist/reactorings.git"
+	},
 	"engines": {
 		"vscode": "^1.30.0"
 	},
@@ -15,8 +20,26 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
-			{
+		"configuration": [{
+			"title": "Reactorings",
+			"properties": {
+				"reactorings.defaultExtension": {
+					"type": "string",
+					"default": "jsx",
+					"enum": [
+						"js",
+						"jsx"
+					],
+					"description": "Default extension of created component"
+				},
+				"reactorings.moveComponentToFolder": {
+					"type": "boolean",
+					"default": false,
+					"description": "Specify is component should be placed inside directory"
+				}
+			}
+		}],
+		"commands": [{
 				"category": "Reactorings",
 				"command": "extension.extractNewReactClass",
 				"title": "Move to new React Class Component"
@@ -28,8 +51,7 @@
 			}
 		],
 		"menus": {
-			"editor/context": [
-				{
+			"editor/context": [{
 					"when": "editorLangId == html",
 					"command": "extension.extractNewReactClass",
 					"group": "YourGroup@1"
@@ -40,12 +62,10 @@
 					"group": "YourGroup@2"
 				}
 			],
-			"explorer/context": [
-				{
-					"command": "extension.extractNewReactClass",
-					"group": "YourGroup@1"
-				}
-			]
+			"explorer/context": [{
+				"command": "extension.extractNewReactClass",
+				"group": "YourGroup@1"
+			}]
 		}
 	},
 	"scripts": {

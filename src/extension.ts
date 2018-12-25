@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import * as path from "path";
 import * as fs from "fs";
 
+const { defaultExtension, moveComponentToFolder } = vscode.workspace.getConfiguration('reactorings');
 
 function getSelectedText() {
 	let activeTextEditor = vscode.window.activeTextEditor;
@@ -42,21 +43,27 @@ function createComponent(isConst) {
 
 		if (isConst) {
 			refactoringContent =
-`
+				`
 const ${value} = props => { return (${getSelectedText()}); };
 
 export default ${value};
 `;
 		}
 
-		let filePath = path.join(vscode.workspace.rootPath, value + '.jsx');
-		fs.writeFileSync(filePath, refactoringContent, 'utf8');
+		let fileName = `${value}.${defaultExtension}`;
+		let folder = (moveComponentToFolder == true) ? value.toLowerCase() : '';
+		
+		let filePath = path.join(vscode.workspace.rootPath, folder);
+		fs.mkdirSync(filePath);
+
+		let filePathWithName = path.join(filePath, fileName);
+
+		fs.writeFileSync(filePathWithName, refactoringContent, 'utf8');
 
 		// Display a message box to the user
-		vscode.window.showInformationMessage(`Extracted HTML into ${value}.jsx`);
+		vscode.window.showInformationMessage(`Extracted HTML into ${fileName}`);
 
-
-		vscode.workspace.openTextDocument(filePath).then((doc) => {
+		vscode.workspace.openTextDocument(filePathWithName).then((doc) => {
 			let options = vscode.window.activeTextEditor.options;
 
 			vscode.window.showTextDocument(doc, 1, false).then(() =>
@@ -82,6 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	// console.log('Congratulations, your extension "reactorings" is now active!');
+	console.log(`folder: ${moveComponentToFolder}`);
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
