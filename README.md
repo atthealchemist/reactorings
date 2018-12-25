@@ -18,9 +18,9 @@ Now it could:
 
 ### TODOs:
 
-- [ ] add settings
-  - [ ] change jsx extension to js
-  - [ ] add component in folder
+- [x] add settings
+  - [x] change jsx extension to js
+  - [x] add component in folder
 - [ ] some new features
 
 -------------------------------------------------------------------------------------
