@@ -23,7 +23,7 @@ class Reactor {
         });
     }
 
-    createComponent(isConst) {
+    createComponent(options) {
 
         vscode.window.showInputBox({
             prompt: "Enter name of new component",
@@ -50,13 +50,15 @@ class Reactor {
         export default ${value};
         `;
     
-            if (isConst) {
+            if (options.isConst == true && options.explorer == false) {
                 refactoringContent =
-                    `
-    const ${value} = props => { return (${this.getSelectedText()}); };
+`
+const ${value} = props => { return (
+    ${this.getSelectedText()}
+); };
     
-    export default ${value};
-    `;
+export default ${value};
+`;
             }
     
             let fileName = `${value}.${defaultExtension}`;
@@ -66,31 +68,27 @@ class Reactor {
             fs.mkdirSync(filePath);
     
             let filePathWithName = path.join(filePath, fileName);
-    
             fs.writeFileSync(filePathWithName, refactoringContent, 'utf8');
 
-
-            if(replaceSelectionBlockWithComponent == true) {
+            if(options.explorer == false && replaceSelectionBlockWithComponent == true) {
                 this.replaceSelectedTextWith(`<${value} />`);
             }
             
-            // Display a message box to the user
-            vscode.window.showInformationMessage(`Extracted HTML into ${fileName}`);
+            let uri = vscode.Uri.file(filePathWithName);
     
-            vscode.workspace.openTextDocument(filePathWithName).then((doc) => {
+            vscode.workspace.openTextDocument(uri).then((doc) => {
                 let options = vscode.window.activeTextEditor.options;
-    
-                vscode.window.showTextDocument(doc, 1, false).then(() =>
-                    vscode.commands.executeCommand('vscode.executeFormatDocumentProvider', doc.uri, options).then(
-                        (changes: vscode.TextEdit[]) => {
-                            let formattedEdit = new vscode.WorkspaceEdit();
-                            formattedEdit.set(doc.uri, changes);
-                            vscode.workspace.applyEdit(formattedEdit);
-                            vscode.window.activeTextEditor.document.save();
-                        }
-                    )
+                vscode.commands.executeCommand('vscode.executeFormatDocumentProvider', doc.uri, options).then(
+                    (changes: vscode.TextEdit[]) => {
+                        let formattedEdit = new vscode.WorkspaceEdit();
+                        formattedEdit.set(uri, changes);
+                        vscode.workspace.applyEdit(formattedEdit);
+                    }
                 );
+                 vscode.window.showTextDocument(doc, 1, false);
             });
+
+            vscode.window.showInformationMessage(`Extracted HTML into ${fileName}`);
     
         });
     

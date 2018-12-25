@@ -10,10 +10,20 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let reactor = new Reactor();
 
-	let disposableNewReactClass = vscode.commands.registerCommand('extension.extractNewReactClass', () => reactor.createComponent(false));
-	let disposableNewReactConst = vscode.commands.registerCommand('extension.extractNewReactConst', () => reactor.createComponent(true));
+	let disposableCreateReactClass = vscode.commands.registerCommand('extension.createNewReactClass', () => reactor.createComponent({
+		isConst: false,
+		explorer: true
+	}));
+	let disposableNewReactClass = vscode.commands.registerCommand('extension.extractNewReactClass', () => reactor.createComponent({
+		isConst: false,
+		explorer: false
+	}));
+	let disposableNewReactConst = vscode.commands.registerCommand('extension.extractNewReactConst', () => reactor.createComponent({
+		isConst: true,
+		explorer: false
+	}));
 
-	context.subscriptions.push(disposableNewReactClass, disposableNewReactConst);
+	context.subscriptions.push(disposableCreateReactClass, disposableNewReactClass, disposableNewReactConst);
 }
 
 // this method is called when your extension is deactivated
