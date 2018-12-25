@@ -1,0 +1,68 @@
+{
+	"name": "reactorings",
+	"displayName": "Reactorings",
+	"description": "A bunch of useful refactorings and scaffoldings for VS Code",
+	"version": "1.0.0",
+	"engines": {
+		"vscode": "^1.30.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.extractNewReactClass",
+		"onCommand:extension.extractNewReactConst"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"category": "Reactorings",
+				"command": "extension.extractNewReactClass",
+				"title": "Move to new React Class Component"
+			},
+			{
+				"category": "Reactorings",
+				"command": "extension.extractNewReactConst",
+				"title": "Move to new React Const Component"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorLangId == html",
+					"command": "extension.extractNewReactClass",
+					"group": "YourGroup@1"
+				},
+				{
+					"when": "editorLangId == html",
+					"command": "extension.extractNewReactConst",
+					"group": "YourGroup@2"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "extension.extractNewReactClass",
+					"group": "YourGroup@1"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "yarn run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "yarn run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"@types/mocha": "^2.2.42",
+		"@types/node": "^8.10.25",
+		"typescript": "^3.1.4",
+		"vscode": "^1.1.25"
+	},
+	"dependencies": {
+		"global": "^4.3.2",
+		"vsce": "^1.54.0"
+	}
+}
