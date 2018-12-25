@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
 
-const { defaultExtension, moveComponentToFolder } = vscode.workspace.getConfiguration('reactorings');
+const { defaultExtension, moveComponentToFolder, replaceSelectionBlockWithComponent } = vscode.workspace.getConfiguration('reactorings');
 
 class Reactor {
 
@@ -12,6 +12,15 @@ class Reactor {
         const range = new vscode.Range(new vscode.Position(selection.start.line, selection.start.character), new vscode.Position(selection.end.line, selection.end.character));
         let selectedText = activeTextEditor.document.getText(range);
         return selectedText;
+    }
+
+    replaceSelectedTextWith(text) {
+        let activeTextEditor = vscode.window.activeTextEditor;
+        const selection = activeTextEditor.selection;
+        const range = new vscode.Range(new vscode.Position(selection.start.line, selection.start.character), new vscode.Position(selection.end.line, selection.end.character));
+        activeTextEditor.edit((change) => {
+            change.replace(range, text);
+        });
     }
 
     createComponent(isConst) {
@@ -59,7 +68,12 @@ class Reactor {
             let filePathWithName = path.join(filePath, fileName);
     
             fs.writeFileSync(filePathWithName, refactoringContent, 'utf8');
-    
+
+
+            if(replaceSelectionBlockWithComponent == true) {
+                this.replaceSelectedTextWith(`<${value} />`);
+            }
+            
             // Display a message box to the user
             vscode.window.showInformationMessage(`Extracted HTML into ${fileName}`);
     

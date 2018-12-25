@@ -37,6 +37,11 @@
 						"type": "boolean",
 						"default": false,
 						"description": "Specify is component should be placed inside directory"
+					},
+					"reactorings.replaceSelectionBlockWithComponent": {
+						"type": "boolean",
+						"default": false,
+						"description": "Specify if selected block should be replaced by component definition (e.g. <MyComponent />)"
 					}
 				}
 			}
