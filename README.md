@@ -3,6 +3,10 @@
 Reactorings - a bunch of useful scaffoldings and refactorings for React in VSCode.
 Something, that missed since Angular Scaffolding and JetBrains IDEs.
 
+## Howto
+Open any HTML document, select prefferable component with mouse selection, right mouse click and voila!
+Also, you can create empty React component, from Explorer context menu
+
 ### 1.0.0
 
 Initial release of Reactorings
