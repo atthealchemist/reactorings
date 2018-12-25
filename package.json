@@ -1,9 +1,10 @@
 {
 	"name": "reactorings",
 	"displayName": "Reactorings",
-	"description": "A bunch of useful refactorings and scaffoldings for VS Code",
-	"version": "1.0.2",
+	"description": "A bunch of useful refactorings and scaffoldings for React in VS Code",
+	"version": "1.0.3",
 	"publisher": "atthealchemist",
+	"icon": "images/icon.png",
 	"repository": {
 		"type": "github",
 		"url": "https://github.com/atthealchemist/reactorings.git"
