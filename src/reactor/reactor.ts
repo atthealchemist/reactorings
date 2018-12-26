@@ -24,7 +24,9 @@ class Reactor {
     }
 
     createComponent(options) {
-
+        let activeFilePath = options.clickedFilePath;
+        let selectedText = this.getSelectedText() != '' ? this.getSelectedText() : '<div></div>';
+            
         vscode.window.showInputBox({
             prompt: "Enter name of new component",
             value: "MyComponent"
@@ -42,7 +44,7 @@ class Reactor {
         }
         render() {
         return (
-            ${this.getSelectedText()}
+            ${selectedText}
         );
         }
         }
@@ -54,7 +56,7 @@ class Reactor {
                 refactoringContent =
 `
 const ${value} = props => { return (
-    ${this.getSelectedText()}
+    ${selectedText}
 ); };
     
 export default ${value};
@@ -64,7 +66,7 @@ export default ${value};
             let fileName = `${value}.${defaultExtension}`;
             let folder = (moveComponentToFolder == true) ? value.toLowerCase() : '';
             
-            let filePath = path.join(vscode.workspace.rootPath, folder);
+            let filePath = path.join(activeFilePath, folder);
             fs.mkdirSync(filePath);
     
             let filePathWithName = path.join(filePath, fileName);
