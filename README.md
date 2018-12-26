@@ -7,7 +7,7 @@ Something, that missed since Angular Scaffolding and JetBrains IDEs.
 Open any HTML document, select prefferable component with mouse selection, right mouse click and voila!
 Also, you can create empty React component, from Explorer context menu
 
-### 1.0.0
+### 1.0.0-1.0.X
 
 Initial release of Reactorings
 
@@ -22,5 +22,6 @@ Now it could:
   - [x] change jsx extension to js
   - [x] add component in folder
 - [ ] some new features
+- [ ] rewrite template logic to snippets usage / or AST parser usage
 
 -------------------------------------------------------------------------------------
